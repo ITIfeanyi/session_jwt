@@ -13,13 +13,13 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       res.clearCookie("test_jwt", { path: "/" });
-      return res.redirect("https://quiet-river-09568.herokuapp.com/login");
+      return res.render("login");
     } else {
       //user is present here
       //password check
       if (user.password !== password) {
         res.clearCookie("test_jwt", { path: "/" });
-        return res.redirect("https://quiet-river-09568.herokuapp.com/login");
+        return res.render("login");
       } else {
         //user and password are coorect assign a token
         const token = jwt.sign({ id: user._id }, "lifeiseasy", {
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.redirect("https://quiet-river-09568.herokuapp.com/login");
+    res.render("login");
   }
 });
 
@@ -61,7 +61,7 @@ router.post("/register", async (req, res) => {
     maxAge: 1000 * 60 * 60 * 2,
     path: "/",
   });
-  res.redirect("https://quiet-river-09568.herokuapp.com/dashboard");
+  res.render("dashboard");
 });
 
 router.get("/dashboard", async (req, res) => {
@@ -69,7 +69,7 @@ router.get("/dashboard", async (req, res) => {
     const decodeToken = jwt.verify(req.cookies.test_jwt, "lifeiseasy");
     if (!decodeToken || decodeToken === "") {
       res.clearCookie("test_jwt", { path: "/" });
-      res.redirect("https://quiet-river-09568.herokuapp.com/login");
+      res.render("login");
     } else {
       const user = await User.findById(decodeToken.id);
       res.render("dashboard", { name: user.name });
@@ -77,13 +77,13 @@ router.get("/dashboard", async (req, res) => {
   } catch (error) {
     if (error.message === "jwt expired") {
       res.clearCookie("test_jwt", { path: "/" });
-      res.redirect("https://quiet-river-09568.herokuapp.com/login");
+      res.render("login");
     }
   }
 });
 
 router.get("/logout", (req, res) => {
   res.clearCookie("test_jwt", { path: "/" });
-  res.redirect("https://quiet-river-09568.herokuapp.com/login");
+  res.render("login");
 });
 module.exports = router;
