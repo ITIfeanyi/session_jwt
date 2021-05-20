@@ -64,13 +64,14 @@ router.post("/register", async (req, res) => {
   res.redirect("https://sessiontestjwt.herokuapp.com/dashboard");
 });
 
-router.get("/dashboard", (req, res) => {
+router.get("/dashboard", async (req, res) => {
   try {
     const decodeToken = jwt.verify(req.cookies.test_jwt, "lifeiseasy");
     if (!decodeToken || decodeToken === "") {
       res.clearCookie("test_jwt", { path: "/" });
       res.redirect("https://sessiontestjwt.herokuapp.com/login");
     } else {
+      const user = await User.findById(decodeToken.id);
       res.render("dashboard", { name: user.name });
     }
   } catch (error) {
