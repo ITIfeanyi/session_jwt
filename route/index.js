@@ -3,10 +3,6 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const User = require("../model/user");
 
-router.get("/", (req, res) => {
-  res.redirect("https://sessiontestjwt.herokuapp.com/login");
-});
-
 router.get("/login", (req, res) => {
   res.render("login");
 });
