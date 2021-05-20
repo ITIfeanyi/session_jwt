@@ -1,0 +1,41 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGIN</title>
+    <link rel="stylesheet" href="./stylesheet.css">
+</head>
+
+<body>
+
+    <main class="main">
+        <article class="login_title_container">
+            <h2>Register </h2>
+        </article>
+        <section>
+            <form action="/register" method="POST">
+                <div class="tile">
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="Name" name="name" />
+                </div>
+                <div class="tile">
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Email" name="email" />
+                </div>
+                <div class="tile">
+                    <label for="password">Password</label>
+                    <input type="password" placeholder="Password" name="password" />
+                </div>
+                <div class="btn_container">
+                    <button type="submit">Register</button>
+                </div>
+            </form>
+        </section>
+        <article>
+            <p> <a href="/login">Login</a> here</p>
+        </article>
+    </main>
+</body>
+
+</html>

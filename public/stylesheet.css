@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+main {
+  background-color: white;
+  width: 20rem;
+  max-width: 20rem;
+  margin: 10vh auto;
+}
+.login_title_container {
+  text-align: center;
+}
+.tile {
+  display: flex;
+  flex-flow: column;
+}
+.btn_container {
+  margin-top: 2rem;
+}
