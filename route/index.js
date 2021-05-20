@@ -13,13 +13,13 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       res.clearCookie("test_jwt", { path: "/" });
-      return res.redirect("http://localhost:3000/login");
+      return res.redirect("https://sessiontestjwt.herokuapp.com/login");
     } else {
       //user is present here
       //password check
       if (user.password !== password) {
         res.clearCookie("test_jwt", { path: "/" });
-        return res.redirect("http://localhost:3000/login");
+        return res.redirect("https://sessiontestjwt.herokuapp.com/login");
       } else {
         //user and password are coorect assign a token
         const token = jwt.sign({ id: user._id }, "lifeiseasy", {
@@ -36,7 +36,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.redirect("http://localhost:3000/login");
+    res.redirect("https://sessiontestjwt.herokuapp.com/login");
   }
 });
 
@@ -53,7 +53,7 @@ router.post("/register", async (req, res) => {
   });
   await newUser.save();
   const token = jwt.sign({ id: newUser._id }, "lifeiseasy", {
-    expiresIn: "10000",
+    expiresIn: "20000",
   });
 
   res.cookie("test_jwt", token, {
@@ -61,7 +61,7 @@ router.post("/register", async (req, res) => {
     maxAge: 1000 * 60 * 60 * 2,
     path: "/",
   });
-  res.redirect("http://localhost:3000/dashboard");
+  res.redirect("https://sessiontestjwt.herokuapp.com/dashboard");
 });
 
 router.get("/dashboard", (req, res) => {
@@ -69,20 +69,20 @@ router.get("/dashboard", (req, res) => {
     const decodeToken = jwt.verify(req.cookies.test_jwt, "lifeiseasy");
     if (!decodeToken || decodeToken === "") {
       res.clearCookie("test_jwt", { path: "/" });
-      res.redirect("http://localhost:3000/login");
+      res.redirect("https://sessiontestjwt.herokuapp.com/login");
     } else {
-      res.send("Welcome");
+      res.render("dashboard", { name: user.name });
     }
   } catch (error) {
     if (error.message === "jwt expired") {
       res.clearCookie("test_jwt", { path: "/" });
-      res.redirect("http://localhost:3000/login");
+      res.redirect("https://sessiontestjwt.herokuapp.com/login");
     }
   }
 });
 
 router.get("/logout", (req, res) => {
   res.clearCookie("test_jwt", { path: "/" });
-  res.redirect("http://localhost:3000/login");
+  res.redirect("https://sessiontestjwt.herokuapp.com/login");
 });
 module.exports = router;
