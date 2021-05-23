@@ -34,7 +34,8 @@ router.post("/login", async (req, res) => {
           path: "/",
         });
 
-        res.render("dashboard", { name: user.name });
+        // res.render("dashboard", { name: user.name });
+        res.redirect("https://quiet-river-09568.herokuapp.com/dashboard");
       }
     }
   } catch (error) {
