@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require("../model/user");
 
 router.get("/", (req, res) => {
-  res.redirect("http://localhost:3000/login");
+  res.redirect("https://quiet-river-09568.herokuapp.com/login");
 });
 router.get("/login", (req, res) => {
   res.render("login");
