@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require("../model/user");
 
 router.get("/", (req, res) => {
-  res.render("login");
+  res.redirect("http://localhost:3000/login");
 });
 router.get("/login", (req, res) => {
   res.render("login");
@@ -16,13 +16,13 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       res.clearCookie("test_jwt", { path: "/" });
-      return res.render("login");
+      return res.redirect("https://quiet-river-09568.herokuapp.com/login");
     } else {
       //user is present here
       //password check
       if (user.password !== password) {
         res.clearCookie("test_jwt", { path: "/" });
-        return res.render("login");
+        return res.redirect("https://quiet-river-09568.herokuapp.com/login");
       } else {
         //user and password are coorect assign a token
         const token = jwt.sign({ id: user._id }, "lifeiseasy", {
@@ -64,7 +64,8 @@ router.post("/register", async (req, res) => {
     maxAge: 1000 * 60 * 60 * 2,
     path: "/",
   });
-  res.render("dashboard");
+  res.redirect("https://quiet-river-09568.herokuapp.com/dashboard");
+  // res.redirect("http://localhost:3000/dashboard");
 });
 
 router.get("/dashboard", async (req, res) => {
@@ -87,6 +88,6 @@ router.get("/dashboard", async (req, res) => {
 
 router.get("/logout", (req, res) => {
   res.clearCookie("test_jwt", { path: "/" });
-  res.render("login");
+  res.redirect("https://quiet-river-09568.herokuapp.com/login");
 });
 module.exports = router;
