@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.render("login");
+    res.redirect("https://quiet-river-09568.herokuapp.com/login");
   }
 });
 
@@ -66,13 +66,13 @@ router.post("/register", async (req, res) => {
     path: "/",
   });
   res.redirect("https://quiet-river-09568.herokuapp.com/dashboard");
-  // res.redirect("http://localhost:3000/dashboard");
 });
 
 router.get("/dashboard", async (req, res) => {
   try {
     const decodeToken = jwt.verify(req.cookies.test_jwt, "lifeiseasy");
-    if (!decodeToken || decodeToken === "") {
+    console.log(decodeToken);
+    if (!decodeToken || decodeToken === "" || decodeToken === null) {
       res.clearCookie("test_jwt", { path: "/" });
       res.redirect("https://quiet-river-09568.herokuapp.com/login");
     } else {
@@ -82,7 +82,7 @@ router.get("/dashboard", async (req, res) => {
   } catch (error) {
     if (error.message === "jwt expired") {
       res.clearCookie("test_jwt", { path: "/" });
-      res.render("login");
+      res.redirect("https://quiet-river-09568.herokuapp.com/login");
     }
   }
 });
