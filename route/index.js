@@ -74,7 +74,7 @@ router.get("/dashboard", async (req, res) => {
     const decodeToken = jwt.verify(req.cookies.test_jwt, "lifeiseasy");
     if (!decodeToken || decodeToken === "") {
       res.clearCookie("test_jwt", { path: "/" });
-      res.render("login");
+      res.redirect("https://quiet-river-09568.herokuapp.com/login");
     } else {
       const user = await User.findById(decodeToken.id);
       res.render("dashboard", { name: user.name });
